@@ -6,9 +6,9 @@
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock@7,npm/@zendeskgarden/css-utilities@4,npm/@zendeskgarden/css-forms@7,npm/@zendeskgarden/css-buttons@7,npm/@zendeskgarden/css-callouts@3,npm/@zendeskgarden/css-menus@9,npm/@zendeskgarden/css-arrows@3,npm/@zendeskgarden/css-tables@4,npm/@zendeskgarden/css-tooltips@4,npm/@zendeskgarden/css-modals@6,npm/@zendeskgarden/css-tags@5,npm/@zendeskgarden/css-avatars@6,npm/@zendeskgarden/css-tabs@6,npm/@zendeskgarden/css-pagination@4,npm/@zendeskgarden/css-grid@0.1.37,npm/@zendeskgarden/css-chrome@4,npm/@zendeskgarden/css-scrollbars@0.1.27" />
   <link rel="stylesheet" href="./style.css" type="text/css" />
-<<<<<<< HEAD
+
   <script>
-///////////////////////////////////////////////
+
 function fetchData() {
     fetch('https://reqres.in/api/users')
       .then(response => {
@@ -48,57 +48,66 @@ function fetchData() {
 
   
   
-=======
+
   <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
->>>>>>> d46bee9492e766675205c7b5072b0a1b03c1fca6
+
 </head>
 
 <body>
   <div id="main-content">
-
-
-    <h1 class="title">Cadastro</h1>
+   
     <div class="row">
         <div class="inputbox">
+          <label for="nome">Nome</label>
             <input type="text" id="nome" required>
-            <label for="nome">Nome</label>
-        </div>
-        <div class="inputbox">
-            <input type="text" id="email"  required>
-            <label for="email">Email</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="inputbox">
-            <input type="text" id="cep"  required>
-            <label for="cep">CEP</label>
-        </div>
-        <div class="inputbox">
-            <input type="text" id="endereco"  required>
-            <label for="endereco">Endereço</label>
+           
         </div>
         
     </div>
     <div class="row">
         <div class="inputbox">
-            <input type="text" id="bairro"  required>
-            <label for="bairro">Bairro</label>
+           
+            <label for="cep">CEP</label>
+            <input type="text" id="cep"  required>
         </div>
         <div class="inputbox">
+
+          <label for="endereco">Endereço</label>
+            <input type="text" id="endereco"  required>
+            
+        </div>
+        
+    </div>
+    <form>
+    <div class="row">
+        <div class="inputbox">
+          
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro"  required>
+           
+            
+        </div>
+        <div class="inputbox">
+         
             <input type="text" id="cidade"  required>
-            <label for="cidade">Cidade</label>
+            <label for="cidade">Cidade</label>   
         </div>
         <div class="inputbox">
+          
             <input type="text" id="estado"  required>
-            <label for="estado">Estado</label>
+            <label for="estado">Estado</label> 
         </div>
     </div>
     <div class="row">
-        <button>Salvar</button>
+        <button>Atualizar Ticket</button>
     </div>
+    </form>
 
-
+    <section></section>
+    <h4>Últimos tickets do solicitante:</h4></br>
     <div id="userslist"></div>
+
+  </section>
 
   </div>
       
