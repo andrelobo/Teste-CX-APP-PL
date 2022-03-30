@@ -47,9 +47,8 @@ function fetchData() {
   </script>
 
   
-  
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+ 
 
 </head>
 
@@ -158,6 +157,18 @@ function fetchData() {
     
     document.getElementById('cep')
             .addEventListener('focusout',pesquisarCep);
+
+            function atualizaTicket(){
+
+              zafClient.request({  url: '/api/v2/tickets.json',
+                type: 'POST',  contentType: 'application/json', 
+                 data: JSON.stringify({ 
+                      "ticket": {   
+                           "subject": "Test ticket #1",
+                                 "comment": { "body": "This is a test ticket" }    }  })})
+
+
+            }
     
     
     
