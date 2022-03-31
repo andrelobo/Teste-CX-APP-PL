@@ -5,7 +5,6 @@
   <!-- https://garden.zendesk.com -->
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/combine/npm/@zendeskgarden/css-bedrock@7,npm/@zendeskgarden/css-utilities@4,npm/@zendeskgarden/css-forms@7,npm/@zendeskgarden/css-buttons@7,npm/@zendeskgarden/css-callouts@3,npm/@zendeskgarden/css-menus@9,npm/@zendeskgarden/css-arrows@3,npm/@zendeskgarden/css-tables@4,npm/@zendeskgarden/css-tooltips@4,npm/@zendeskgarden/css-modals@6,npm/@zendeskgarden/css-tags@5,npm/@zendeskgarden/css-avatars@6,npm/@zendeskgarden/css-tabs@6,npm/@zendeskgarden/css-pagination@4,npm/@zendeskgarden/css-grid@0.1.37,npm/@zendeskgarden/css-chrome@4,npm/@zendeskgarden/css-scrollbars@0.1.27" />
-    <script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin="anonymous"></script>
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
@@ -13,96 +12,22 @@
 
   <link rel="stylesheet" href="./style.css" type="text/css" />
 
-  <script>
-
-    function fetchData() {
-      fetch('https://freelah.zendesk.com/api/v2/tickets')
-        .then(response => {
-          if (!response.ok) {
-            throw Error('ERROR')
-          }
-          return response.json()
-        })
-        .then(nhaca => {
-          console.log(nhaca.data)
-          const dadosapi = nhaca.data
-            .map(user => {
-              return `
-      <div class= 'user'>
-     
-      <p>Name: ${user.first_name}</p>
-     
-      </div>
-      `
-            })
-            .join('')
-          console.log(dadosapi)
-          document.querySelector('#userslist')
-            .insertAdjacentHTML('afterbegin', dadosapi)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-
-    fetchData()
-
-
-
-
-  </script>
-
-
-
-
-
+ 
 </head>
 
 <body>
   <div id="main-content">
-    <form>
-    <div class="row">
-      <div class="inputbox">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" required>
+    
 
-      </div>
-
-    </div>
+   
     <div class="row">
       <div class="inputbox">
 
         <label for="cep">CEP</label>
         <input type="text" id="cep" required>
       </div>
-      <div class="inputbox">
-
-        <label for="endereco">Endereço</label>
-        <input type="text" id="endereco" required>
-
-      </div>    
-     
-       
-          <div class="inputbox">
-
-            <label for="bairro">Bairro</label>
-            <input type="text" id="bairro" required>
-
-
-          </div>
-          <div class="inputbox">
-
-            <input type="text" id="cidade" required>
-            <label for="cidade">Cidade</label>
-          </div>
-          <div class="inputbox">
-
-            <input type="text" id="estado" required>
-            <label for="estado">Estado</label>
-          </div>
-        </div>
-       
-          <button id="atualizar" onclick="atualizaTicket()" >Atualizar Ticket</button>
+             
+          <button id="atualizar" onclick="fetchData()" >Atualizar Ticket</button>
         </div>
       </form>
       
@@ -115,76 +40,50 @@
 
   </div>
 
-
-
+  
+  <script src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.min.js"></script>
   <script>
 
-    'use strict';
-
-    const limparFormulario = (endereco) => {
-      document.getElementById('endereco').value = '';
-      document.getElementById('bairro').value = '';
-      document.getElementById('cidade').value = '';
-      document.getElementById('estado').value = '';
-    }
-
-
-    const preencherFormulario = (endereco) => {
-      document.getElementById('endereco').value = endereco.logradouro;
-      document.getElementById('bairro').value = endereco.bairro;
-      document.getElementById('cidade').value = endereco.localidade;
-      document.getElementById('estado').value = endereco.uf;
-    }
-
-
-    const eNumero = (numero) => /^[0-9]+$/.test(numero);
-
-    const cepValido = (cep) => cep.length == 8 && eNumero(cep);
-
-    const pesquisarCep = async () => {
-      limparFormulario();
-
-      const cep = document.getElementById('cep').value.replace("-", "");
-      const url = `https://viacep.com.br/ws/${cep}/json/`;
-      if (cepValido(cep)) {
-        const dados = await fetch(url);
-        const endereco = await dados.json();
-        if (endereco.hasOwnProperty('erro')) {
-          document.getElementById('endereco').value = 'CEP não encontrado!';
-        } else {
-          preencherFormulario(endereco);
-        }
-      } else {
-        document.getElementById('endereco').value = 'CEP incorreto!';
-      }
-
-    }
-
-    document.getElementById('cep')
-      .addEventListener('focusout', pesquisarCep);
-
-    function atualizaTicket() {
-
-      zafClient.request({
-        url: '/api/v2/tickets.json',
-        type: 'POST', contentType: 'application/json',
-        data: JSON.stringify({
-          "ticket": {
-            "subject": "Test ticket #1",
-            "comment": { "body": "This is a test ticket caraca!" }
+    function fetchData() {
+       fetch('https://freelah.zendesk.com/api/v2/tickets')
+        .then(response => {
+          if (!response.ok) {
+            throw Error('ERROR')
           }
+          return response.json()
         })
-      })
+        .then(nhaca => {
+          console.log(nhaca.data) 
+
+          var client = ZAFClient.init();
+          client.get('ticket.requester.name')
+          .then(function(data) {  console.log(data); 
+            // { "ticket.requester.name": "Mikkel Svane" }});
 
 
+    const dadosapi = data.map(user => {
+        return `
+        <div class= 'user'>
+        <img src='${user.avatar}'></img>
+        <p>Name: ${user.first_name}</p>
+        <p>Email: ${user.email}</p>
+        </div>
+        `
+    })
+    .join('')
+           console.log(dadosapi)
+          document.querySelector('#app')
+          .insertAdjacentHTML('afterbegin' , dadosapi ) 
+        })
+        .catch( error => {
+          console.log(error)
+        })
     }
-
-
-
-
-
-  </script>
-  <script src="https://assets.zendesk.com/apps/sdk/2.0/zaf_sdk.min.js"></script>
+    
+    
+    
+    
+      </script>
 
 
 
